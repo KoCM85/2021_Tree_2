@@ -33,16 +33,17 @@ public:
     tree& operator=(tree&&) = delete;
 
     void add(type1 data_in) {
-        node<type1> * node_cur = root;
+        node<type1>** node_cur = &root;
 
-        while (node_cur) {
-            if (data_in > node_cur->data)
-                node_cur = node_cur->right;
+        while (*node_cur) {
+            if (data_in > (*node_cur)->data)
+                node_cur = &(*node_cur)->right;
             else
-                node_cur = node_cur->left;
+                node_cur = &(*node_cur)->left;
         }
 
         nodes.emplace_back(data_in);
+        *node_cur = &nodes.back();
     }
 
     void cout_data() {
